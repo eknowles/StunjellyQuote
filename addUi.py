@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'add.ui'
 #
-# Created: Fri Dec 13 14:46:05 2013
-#      by: PyQt4 UI code generator 4.9
+# Created: Sun Dec 15 13:45:39 2013
+#      by: PyQt4 UI code generator 4.9.6
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -12,7 +12,16 @@ from PyQt4 import QtCore, QtGui
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
-    _fromUtf8 = lambda s: s
+    def _fromUtf8(s):
+        return s
+
+try:
+    _encoding = QtGui.QApplication.UnicodeUTF8
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig, _encoding)
+except AttributeError:
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig)
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
@@ -23,7 +32,6 @@ class Ui_Dialog(object):
         self.widget = QtGui.QWidget(Dialog)
         self.widget.setObjectName(_fromUtf8("widget"))
         self.formLayout = QtGui.QFormLayout(self.widget)
-        self.formLayout.setMargin(0)
         self.formLayout.setMargin(0)
         self.formLayout.setObjectName(_fromUtf8("formLayout"))
         self.label = QtGui.QLabel(self.widget)
@@ -70,12 +78,12 @@ class Ui_Dialog(object):
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
-        Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "Dialog", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("Dialog", "Book Title", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("Dialog", "Conversion Type", None, QtGui.QApplication.UnicodeUTF8))
-        self.type.setItemText(0, QtGui.QApplication.translate("Dialog", "EPUB3 (FLAT)", None, QtGui.QApplication.UnicodeUTF8))
-        self.type.setItemText(1, QtGui.QApplication.translate("Dialog", "EPUB3 (COMPLEX)", None, QtGui.QApplication.UnicodeUTF8))
-        self.type.setItemText(2, QtGui.QApplication.translate("Dialog", "Amazon KF8 (COMIC)", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_3.setText(QtGui.QApplication.translate("Dialog", "Pages", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_4.setText(QtGui.QApplication.translate("Dialog", "Panels", None, QtGui.QApplication.UnicodeUTF8))
+        Dialog.setWindowTitle(_translate("Dialog", "Dialog", None))
+        self.label.setText(_translate("Dialog", "Book Title", None))
+        self.label_2.setText(_translate("Dialog", "Conversion Type", None))
+        self.type.setItemText(0, _translate("Dialog", "EPUB3 (FLAT)", None))
+        self.type.setItemText(1, _translate("Dialog", "EPUB3 (COMPLEX)", None))
+        self.type.setItemText(2, _translate("Dialog", "Amazon KF8 (COMIC)", None))
+        self.label_3.setText(_translate("Dialog", "Pages", None))
+        self.label_4.setText(_translate("Dialog", "Panels", None))
 

@@ -1,3 +1,6 @@
-Title,Type,Pages,Panels,Price
-Book 1,EPUB3 (FLAT),10,0,48.00
-Book 2,EPUB3 (FLAT),50,0,60.00
+Title,Type,Pages,Panels,Price
+Book 1,EPUB3 (FLAT),0,0,45.00
+
+Sub-Total:,£45.00
+Discount,£0.00
+Total:,£45.00

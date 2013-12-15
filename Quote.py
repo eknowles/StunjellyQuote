@@ -1,11 +1,15 @@
-# -*- coding: utf-8 -*-
+## -*- coding: utf-8 -*-
+
 import os, sys
 from PyQt4 import QtCore, QtGui
 from windowUi import Ui_MainWindow
 from addUi import Ui_Dialog
+import re
 import csv
+import unicodecsv
 import urllib
 import urllib2
+from datetime import datetime
 
 class Main(QtGui.QMainWindow):
 	def __init__(self):
@@ -29,8 +33,9 @@ class Main(QtGui.QMainWindow):
 
 		self.ui.add.clicked.connect(self.AddBook)
 		self.ui.remove.clicked.connect(self.RemoveBook)
-		self.ui.recalc.clicked.connect(self.reCalc)
 		self.ui.save.clicked.connect(self.Export)
+
+		self.updatedate()
 
 		self.ui.treeWidget.setColumnWidth(0, 300)
 		self.ui.treeWidget.setColumnWidth(1, 120)
@@ -38,16 +43,29 @@ class Main(QtGui.QMainWindow):
 		self.ui.treeWidget.setColumnWidth(3, 80)
 		self.ui.treeWidget.setColumnWidth(4, 80)
 
+	def updatedate(self):
+		date = str(datetime.now().strftime("%d %B %Y"))
+		self.ui.date.setText(date)
+
 	def Export(self):
 		root = self.ui.treeWidget.invisibleRootItem()
 		child_count = root.childCount()
 		data = [['Title', 'Type', 'Pages', 'Panels', 'Price']]
 		for i in range(child_count):
 			item = root.child(i)
-			data.append([str(item.text(0)), str(item.text(1)), str(item.text(2)), str(item.text(3)), str(item.text(4))])
-		print data
-		with open('test.csv', 'w') as fp:
-			a = csv.writer(fp, delimiter=',')
+			newtitle = re.sub(',', '', str(item.text(0)))
+			data.append([str(newtitle), str(item.text(1)), str(item.text(2)), str(item.text(3)), str(item.text(4))])
+		# print data
+		data.append([])
+		x = unicode(self.ui.subtotal.text())
+		y = unicode(self.ui.discount.text())
+		z = unicode(self.ui.total.text())
+		# print x,y,z
+		data.append(['Sub-Total:', x])
+		data.append([self.ui.discount_label.text(), y])
+		data.append(['Total:', z])
+		with open('test.csv', 'wb') as fp:
+			a = unicodecsv.writer(fp, delimiter=',')
 			a.writerows(data)
 
 	def AddBook(self):
@@ -68,7 +86,7 @@ class Main(QtGui.QMainWindow):
 		self._dialog.show()
 
 	def reCalc(self):
-		min_amount_for_discount = 10.0
+		min_amount_for_discount = 5.0
 		max_available_for_discount = 20.0
 
 		discount_percentage_min = 5.0
@@ -91,8 +109,11 @@ class Main(QtGui.QMainWindow):
 			discount = (percentage * (discount_percentage_max - discount_percentage_min)) + discount_percentage_min
 			print percentage, discount
 			off = total * (discount/100)
-			self.ui.discount_label.setText('Discount (' + str(round(discount)) + '%)')
-			self.ui.discount.setText(u'£-'+ str("%.2f" % round(off, 2)))
+			self.ui.discount_label.setText('Discount (' + str(round(discount)) + '%):')
+			self.ui.discount.setText(u'-£'+ str("%.2f" % round(off, 2)))
+		else:
+			self.ui.discount_label.setText('Discount')
+			self.ui.discount.setText(u'£0.00')
 		self.ui.total.setText(u'£' + str("%.2f" % round(total-round(off), 2)))
 
 
