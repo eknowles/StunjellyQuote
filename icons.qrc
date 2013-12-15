@@ -1,0 +1,7 @@
+<RCC>
+  <qresource prefix="PNG">
+    <file>png/epub-icon.png</file>
+    <file>png/stunjelly-icon.png</file>
+    <file>png/stunjelly-logo.png</file>
+  </qresource>
+</RCC>
