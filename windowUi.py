@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'window.ui'
 #
-# Created: Sun Dec 15 13:45:39 2013
+# Created: Fri Mar 21 08:56:58 2014
 #      by: PyQt4 UI code generator 4.9.6
 #
 # WARNING! All changes made in this file will be lost!
@@ -128,6 +128,9 @@ class Ui_MainWindow(object):
         self.horizontalLayout_3 = QtGui.QHBoxLayout(self.widget_4)
         self.horizontalLayout_3.setMargin(0)
         self.horizontalLayout_3.setObjectName(_fromUtf8("horizontalLayout_3"))
+        self.import_2 = QtGui.QPushButton(self.widget_4)
+        self.import_2.setObjectName(_fromUtf8("import_2"))
+        self.horizontalLayout_3.addWidget(self.import_2)
         self.save = QtGui.QPushButton(self.widget_4)
         self.save.setObjectName(_fromUtf8("save"))
         self.horizontalLayout_3.addWidget(self.save)
@@ -202,6 +205,7 @@ class Ui_MainWindow(object):
         self.remove.setText(_translate("MainWindow", "Remove", None))
         self.label_4.setText(_translate("MainWindow", "Sub-Total", None))
         self.subtotal.setText(_translate("MainWindow", "£0.00", None))
+        self.import_2.setText(_translate("MainWindow", "Import CSV", None))
         self.save.setText(_translate("MainWindow", " Export to Excel ", None))
         self.discount_label.setText(_translate("MainWindow", "Discount", None))
         self.discount.setText(_translate("MainWindow", "£0.00", None))

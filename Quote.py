@@ -34,6 +34,7 @@ class Main(QtGui.QMainWindow):
 		self.ui.add.clicked.connect(self.AddBook)
 		self.ui.remove.clicked.connect(self.RemoveBook)
 		self.ui.save.clicked.connect(self.Export)
+		self.ui.import_2.clicked.connect(self.ImportQuote)
 
 		self.updatedate()
 
@@ -71,13 +72,46 @@ class Main(QtGui.QMainWindow):
 	def AddBook(self):
 		root = self.ui.treeWidget.invisibleRootItem()
 		child_count = root.childCount()
-		if child_count < 20:
+		if child_count < 200:
 			self.new_book = Add(self)
 			self.new_book.show()
 
 	def RemoveBook(self):
 		self.ui.treeWidget.takeTopLevelItem(self.ui.treeWidget.indexOfTopLevelItem(self.ui.treeWidget.currentItem()))
 		self.reCalc()
+
+	def ImportQuote(self):
+		with open('import.csv', 'rb') as csvfile:
+			linereader = csv.reader(csvfile, delimiter=',', quotechar='"')
+			for row in linereader:
+				new = Book()
+				new.title = row[0]
+				new.type = int(row[2])
+				new.pages = int(row[1])
+				new.panels = int(row[3])
+
+				item = QtGui.QTreeWidgetItem()
+				item.setText(0, new.title)
+				cost = float(000.00)
+				if new.type == 0:
+					# Fixed Layout EPUB3 (FLAT)
+					item.setText(1, 'EPUB3 (FLAT)')
+					cost = self.c1prep + (new.pages * self.c1ppg)
+				elif new.type == 1:
+					# Fixed Layout EPUB3 (COMPLEX)
+					item.setText(1, 'EPUB3 (COMPLEX)')
+					cost = self.c2prep + (new.pages * self.c2ppg)
+				elif new.type == 2:
+					# Amazon KF8 Comic (COMIC)
+					item.setText(1, 'EPUB3 (COMIC)')
+					cost = self.c3prep + (new.pages * self.c3ppg) + (new.panels * self.c3ppl)
+				item.setText(2, str(new.pages))
+				item.setText(3, str(new.panels))
+				item.setText(4, str("%.2f" % round(cost, 2)))
+				self.ui.treeWidget.addTopLevelItem(item)
+				self.ui.treeWidget.repaint()
+				self.reCalc()
+
 
 	def handleOpenDialog(self):
 		if self._dialog is None:
@@ -86,7 +120,7 @@ class Main(QtGui.QMainWindow):
 		self._dialog.show()
 
 	def reCalc(self):
-		min_amount_for_discount = 5.0
+		min_amount_for_discount = 200.0
 		max_available_for_discount = 20.0
 
 		discount_percentage_min = 5.0
